@@ -1,0 +1,1 @@
+<p>Install using <code>npm install</code>.</p>
