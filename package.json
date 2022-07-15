@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "vanilla-tilt": "^1.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

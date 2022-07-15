@@ -1,0 +1,19 @@
+{
+    "name": "kaigen/portfolio",
+    "description": "Simple portfolio displaying my work",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Kaigen\\Portfolio\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aidan Lee",
+            "email": "aidankglee@googlemail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}
