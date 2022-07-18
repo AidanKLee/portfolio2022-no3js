@@ -15,6 +15,7 @@
     --white: white;
     --black: black;
     --dark: rgb(25,25,25);
+    --dark-translucent: rgb(25,25,25,.6);
     --light: rgb(230,230,230);
     --light-translucent: rgba(230,230,230,.8);
     --orange: rgb(190,120,0);
@@ -30,6 +31,11 @@
 html {
     font-family: var(--sans-serif);
     scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+html.loaded {
+    overflow: auto;
 }
 
 body {
@@ -62,13 +68,7 @@ figure {
     max-width: 320px;
     min-width: 240px;
     margin: 1rem .5rem;
-    transform: scale(.8);
 }
-
-/* figure a {
-    height: 128px !important;
-    width: 128px !important;
-} */
 
 figcaption {
     backdrop-filter: blur(.5rem);
@@ -85,10 +85,18 @@ figcaption {
     z-index: 1;
 }
 
+.dg.ac {
+    z-index: 1001;
+}
+
 #root {
     position: relative;
     z-index: 2;
 }
+
+/* #root > section > * {
+    pointer-events: all;
+} */
 
 .js-tilt-glare {
     border-radius: .5rem;
@@ -194,6 +202,54 @@ figcaption {
 
 
 
+#loader {
+    background-color: var(--dark);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 500;
+    color: var(--outline-color);
+}
+
+#loader.done {
+    transition: 1s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#loader > div {
+    width: 20%;
+    min-width: 160px;
+}
+
+#loader > div > svg {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    animation: pulse 4s linear 0s infinite forwards;
+}
+
+@keyframes pulse {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    75% { filter: drop-shadow(0 0 1rem currentColor); opacity: 1; }
+    100% { filter: drop-shadow(0 0 0 transparent); opacity: 0; }
+}
+
+#loader > div > div {
+    width: 100%;
+    /* border: .25rem solid currentColor; */
+    padding: .25rem;
+    border-radius: 1rem;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 0 100%;
+    background-color: black;
+    transition: 2s;
+}
+
+
+
 #hero {
     height: calc(100vh - 76px);
     width: 100%;
@@ -204,6 +260,10 @@ figcaption {
 
 #hero h1 {
     margin-left: 1rem;
+}
+
+#hero h1, #hero p {
+    filter: drop-shadow(-.5rem .5rem .5rem rgba(0, 0, 0, .6));
 }
 
 @media only screen and (max-width: 1280px) {
@@ -316,6 +376,95 @@ figcaption {
         padding-left: 0;
     }
 }
+
+
+
+
+
+
+#player button {
+    background-color: var(--dark-translucent);
+    backdrop-filter: blur(.5rem);
+    border: 0 none transparent;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+
+}
+
+#player .progress {
+    flex: 1;
+    margin: 0 1rem;
+    padding: .25rem;
+    border: 1px solid var(--outline-color);
+    border-radius: 1rem;
+    height: fit-content;
+    background-color: var(--dark-translucent);
+    backdrop-filter: blur(.5rem);
+    background-image: linear-gradient(var(--orange),var(--orange));
+    background-repeat: no-repeat;
+    background-size: 0 100%;
+    transition: .2s;
+    will-change: background-size;
+}
+
+#player .progress:hover {
+    box-shadow: 0 0 .5rem var(--orange);
+}
+
+#player .duration {
+    font-size: .6rem;
+    width: 72px;
+    font-family: 'Roboto Mono';
+    font-weight: 500;
+}
+
+
+
+
+
+
+#about .social-wrapper {
+    background-color: rgb(25,25,25,.6);
+    backdrop-filter: blur(.5rem);
+    padding: 1rem .5rem;
+    margin-bottom: 1rem;
+}
+
+#about .social {
+    max-width: 280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#about .social a {
+    will-change: color;
+    transition: .4s;
+}
+
+#about .social a:hover {
+    color: var(--orange);
+}
+
+
+
+
+
+
+/* #qualifications figure {
+    transition: .8s;
+}
+
+#qualifications figure.active {
+    opacity: 1;
+    top: 0;
+}
+
+#qualifications figure:not(.active) {
+    opacity: 0;
+    top: 256px;
+} */
 
 
 
@@ -530,12 +679,12 @@ figcaption {
 #contact > svg {
     height: 78px;
     width: 100%;
-    fill: var(--light);
+    fill: rgba(230,230,230,.8);
     display: flex;
 }
 
 #contact > div {
-    background-color: var(--light);
+    background-color: rgba(230,230,230,.8);
 }
 
 
@@ -815,6 +964,11 @@ footer .social > a > svg {
     width: 100%;
     background-image: linear-gradient(to right, transparent, var(--orange));
     background-repeat: no-repeat;
+    transition: 1s ease-out;
+}
+
+.rating:not(.active) .rating-bg {
+    background-size: 0 100%;
 }
 
 .bg-95 {
@@ -847,6 +1001,25 @@ footer .social > a > svg {
 
 .bg-55 {
     background-size: 55% 100%;
+}
+
+
+
+
+
+
+#hero, #hero .left-intro, #hero .right-intro,
+.scrolling-banner, .qual-head, #about .head,
+#projects h2, #projects figure, .typed {
+    will-change: opacity, transform;
+}
+
+#qualifications figure {
+    will-change: transform;
+}
+
+.rating-bg, #loader>div>div {
+    will-change: background-size;
 }
 
 
@@ -932,6 +1105,10 @@ button:active, button:focus, .btn:active, .btn:focus {
     color: #00B9E4;
 }
 
+.bgc-t-dark {
+    background-color: var(--dark-translucent);
+}
+
 
 
 
@@ -989,6 +1166,10 @@ button:active, button:focus, .btn:active, .btn:focus {
 
 
 
+.br-2 {
+    border-radius: .5rem;
+}
+
 .br-50 {
     border-radius: 50%;
 }
@@ -1003,6 +1184,10 @@ button:active, button:focus, .btn:active, .btn:focus {
 
 
 
+
+.d-none {
+    display: none;
+}
 
 .d-block {
     display: block;
@@ -1728,6 +1913,10 @@ form button {
 
 .z-4 {
     z-index: 4;
+}
+
+.z-5 {
+    z-index: 5;
 }
 
 

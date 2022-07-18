@@ -15,7 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.1",
+    "gsap": "^3.10.4",
     "jquery": "^3.6.0",
+    "three-orbitcontrols": "^2.110.3",
     "vanilla-tilt": "^1.7.2"
   },
   "devDependencies": {
