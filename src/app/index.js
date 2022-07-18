@@ -74,11 +74,17 @@ document.addEventListener('DOMContentLoaded', e => {
     
     // Project Images
     /************************************************/
+    const head = document.querySelector('head');
     const favicon = document.createElement('link');
+    const appleTouchIcon = document.createElement('link');
+
     favicon.setAttribute('rel', 'icon');
-    favicon.setAttribute('type', 'image/x-icon');
     favicon.setAttribute('href', faviconImg);
-    document.querySelector('head').appendChild(favicon);
+
+    appleTouchIcon.setAttribute('rel', 'apple-touch-icon');
+    appleTouchIcon.setAttribute('href', faviconImg);
+
+    head.appendChild(favicon);
 
 
     // Project Images
@@ -88,6 +94,29 @@ document.addEventListener('DOMContentLoaded', e => {
     const readitImg = createImage(readit, 'Readit4Reddit', '#readit .img');
     const icommerceImg = createImage(icommerce, 'iCommerce', '#icommerce .img');
     const phoenixImg = createImage(phoenix, 'Phoenix MMA', '#phoenix .img');
+
+    // Tooltips
+    /************************************************/
+    const tooltips = document.querySelectorAll('[data-tooltip]');
+
+    tooltips.forEach(tooltip => {
+        const name = tooltip.getAttribute('data-tooltip');
+        const element = document.createElement('div');
+        element.innerHTML = name;
+
+        tooltip.appendChild(element);
+
+        tooltip.addEventListener('mouseenter', e => {
+            tooltip.timeout = setTimeout(() => {
+                tooltip.classList.add('show');
+            },400)
+        })
+
+        tooltip.addEventListener('mouseleave', e => {
+            clearTimeout(tooltip.timeout);
+            tooltip.classList.remove('show');
+        })
+    })
 
     // Vanilla Tilt
     /************************************************/

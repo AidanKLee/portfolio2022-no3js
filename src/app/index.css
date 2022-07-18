@@ -22,6 +22,7 @@
     --dark-border-color: rgb(40,40,40);
     --outline-color: rgb(90,90,90);
     --text-dark: rgb(130,130,130);
+    --text-darker: rgb(200,200,200);
 
     --title: "Oswald", var(--sans-serif);
     --serif: "Playfair Display", "Source Serif Pro", 'Times New Roman', Times, serif;
@@ -710,8 +711,6 @@ footer .social > a:hover {
 
 footer .social > a > svg {
     fill: currentColor;
-    height: 1.25rem;
-    width: 1.25rem;
 }
 
 
@@ -924,51 +923,71 @@ footer .social > a > svg {
 
 
 
-.rating {
-    background-color: rgba(0, 0, 0, 0.2);
+.ratings > div {
     display: flex;
-    align-items: center;
-    border-radius: 2rem;
-    margin-bottom: 4px;
-    backdrop-filter: blur(.5rem);
+    flex: 1 1;
+    flex-wrap: wrap;
 }
 
-.rating span {
-    line-height: 1;
-}
-
-.rating div:first-of-type {
-    position: relative;
-    z-index: 2;
-    width: 14rem;
-    color: var(--light);
+.ratings > div > div {
     display: flex;
-    align-items: center;
-    padding: .25rem;
-}
-
-.rating div:last-of-type {
-    height: 24px;
     flex: 1 1;
 }
 
-.rating svg {
-    fill: currentColor;
-    height: 1rem;
-    width: 1rem;
+.rating {
+    flex: 1 1;
+    color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
 }
 
-.rating .rating-bg {
+.rating > div {
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
     position: absolute;
-    z-index: 1;
-    width: 100%;
-    background-image: linear-gradient(to right, transparent, var(--orange));
-    background-repeat: no-repeat;
-    transition: 1s ease-out;
+    font-size: .8rem;
+    font-weight: 500;
+    text-align: center;
+    background-color: rgb(60,60,60);
+    border-radius: 2rem;
+    width: fit-content;
+    padding: .25rem 1rem;
+    z-index: 5;
+    bottom: calc(-100% + 1.25rem);
+    transition: .2s;
 }
 
-.rating:not(.active) .rating-bg {
-    background-size: 0 100%;
+.rating > div::before {
+    position: absolute;
+    top: -.4rem;
+    left: 50%;
+    height: 0;
+    width: 0;
+    content: " ";
+    border-top: .5rem solid rgb(60,60,60);
+    border-right: .5rem solid rgb(60,60,60);
+    transform: rotate(-45deg) translateX(-50%);
+}
+
+.rating.show > div {
+    opacity: 1;
+}
+
+.rating > svg {
+    min-height: 1.5rem;
+    max-height: 2rem;
+    height: 100%;
+    width: auto;
+    fill: currentColor;
+    transition: .4s;
+}
+
+.rating:hover > svg {
+    color: var(--orange);
+    filter: drop-shadow(0 0 1rem var(--orange));
 }
 
 .bg-95 {
@@ -1386,8 +1405,12 @@ form button {
     color: var(--white);
 }
 
-.text-darker {
+.text-dark {
     color: var(--text-dark);
+}
+
+.text-darker {
+    color: var(--text-darker);
 }
 
 .text-orange {
