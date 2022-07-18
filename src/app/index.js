@@ -12,8 +12,8 @@ import solar from '../assets/audio/solar_penumbra.mp3'
 import VanillaTilt from 'vanilla-tilt';
 import '../assets/fontawesome-free-6.1.1-web/js/all.min';
 import './three';
-import './index.css';
-import './fonts.css';
+// import './index.css';
+// import './fonts.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -228,8 +228,21 @@ document.addEventListener('DOMContentLoaded', e => {
         }
     })
 
+    bar.addEventListener('mousemove', e => {
+        const element = e.target.firstChild;
+        const position = e.layerX;
+        const total = e.target.clientWidth;
+        const positionPercent = (position / total) * 100;
+
+        element.style.width = `${positionPercent}%`;
+    })
+
+    bar.addEventListener('mouseleave', e => {
+        const element = e.target.firstChild;
+        element.style.width = '0';
+    })
+
     playerContainer.appendChild(player);
-    player.append
 
     // Collapse Element
     /************************************************/

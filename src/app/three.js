@@ -46,8 +46,7 @@ const sphereCamera = new THREE.CubeCamera(1, 1000, cubeRenderTarget);
 scene.add(sphereCamera);
 
 const sphereMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff, envMap: cubeRenderTarget.texture, 
-    // metalness: 1, roughness: 0
+    color: 0xffffff, envMap: cubeRenderTarget.texture
 });
 
 const loader = new THREE.TextureLoader(loadingManager);
@@ -65,7 +64,6 @@ const pointsMaterial = new THREE.PointsMaterial({
 // Mesh
 const torus = new THREE.Mesh(geometry, material);
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-// sphere.position.set(0, 0, -1);
 
 const particles = new THREE.Points(particlesGeometry, pointsMaterial);
 
@@ -106,60 +104,7 @@ scene.background = cubeLoader.load(urls);
 
 
 // Get Mouse Position
-let mouseX = 0, mouseY = 0;
-
-// const getMousePosition = e => {
-//     mouseX = e.clientX;
-//     mouseY = e.clientY;
-// }
-// document.addEventListener('mousemove', getMousePosition);
-
-// function onDocumentMouseMove(e) {
-//     mouseX = (e.clientX - (window.innerWidth / 2));
-//     mouseY = (e.clientY - (window.innerHeight / 2));
-// }
-
-// document.addEventListener('mousemove', onDocumentMouseMove);
-// const orbit = new THREE.Object3D();
-// orbit.rotation.order = 'XYZ';
-// orbit.position.set(0, 0, 0);
-// scene.add(orbit);
-
-// const handleMouseMove = e => {
-//     console.log(e)
-//     const scale = -.0001;
-//     orbit.rotateX(e.movementY * scale);
-//     orbit.rotateY(e.movementX * scale);
-//     orbit.rotation.z = 0;
-// }
-
-// document.addEventListener('mousemove', handleMouseMove);
-
-// let previousTouch;
-// document.addEventListener('touchmove', e => {
-//     const touch = e.touches[0];
-
-//     if (previousTouch) {
-//         // be aware that these only store the movement of the first touch in the touches array
-//         e.movementX = touch.clientX - previousTouch.clientX;
-//         e.movementY = touch.clientY - previousTouch.clientY;
-
-//         handleMouseMove(e)
-//     };
-
-//     previousTouch = touch;
-
-//     setTimeout(() => {
-//         previousTouch = null;
-//     }, 500)
-// })
-
-// const cameraDistance = 2;
-// camera.position.z = cameraDistance;
-// orbit.add(camera);
-
 const controls = new OrbitControls(camera, renderer.domElement);
-// controls.dispose();
 controls.update();
 
 controls.autoRotate = true;
@@ -168,16 +113,8 @@ controls.dampingFactor = .005;
 controls.enableZoom = false;
 controls.rotateSpeed = .5;
 
-// controls.listenToKeyEvents(window)
-// console.log(window)
-
-function onDocumentMouseMove( event ) {
-    // Manually fire the event in OrbitControls
-    controls.handleMouseMoveRotate(event);
-}
-
-function onDocumentTouchMove( event ) {
-    controls.handleTouchMoveRotate(event)
+const onDocumentMouseMove = (e) => {
+    controls.handleMouseMoveRotate(e);
 }
 
 document.addEventListener('mousemove', onDocumentMouseMove, false);
@@ -189,19 +126,11 @@ const clock = new THREE.Clock();
 const positions = particles.geometry.attributes.position.array;
 
 const animate = () => {
-    const elapsedTime = clock.getElapsedTime();
-
-    // Update Objects
-    // torus.rotation.y = .5 * elapsedTime;
-    // particles.rotation.x = (mouseY * .004);
-    // particles.rotation.y = (mouseX * .004) + (elapsedTime * .4);
-
-    // orbit.rotation.y += .001;
+    // const elapsedTime = clock.getElapsedTime();
     controls.update();
 
     for (let i = 0; i < particleCount; i++) {
         let z = particles.geometry.attributes.position.getZ(i);
-        // let newZ;
         if (z > 16) {
             z = -16
         }
@@ -244,10 +173,6 @@ window.addEventListener('resize', () => {
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 }, false)
-
-// const folder = gui.addFolder('Camera Rotation');
-// folder.add(camera.rotation, 'x', -1.5, 1.5);
-// folder.open();
 
 export default THREE;
 export { loadingManager };

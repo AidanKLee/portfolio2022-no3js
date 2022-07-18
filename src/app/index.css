@@ -95,10 +95,6 @@ figcaption {
     z-index: 2;
 }
 
-/* #root > section > * {
-    pointer-events: all;
-} */
-
 .js-tilt-glare {
     border-radius: .5rem;
 }
@@ -239,7 +235,6 @@ figcaption {
 
 #loader > div > div {
     width: 100%;
-    /* border: .25rem solid currentColor; */
     padding: .25rem;
     border-radius: 1rem;
     background-image: linear-gradient(currentColor, currentColor);
@@ -407,10 +402,23 @@ figcaption {
     background-size: 0 100%;
     transition: .2s;
     will-change: background-size;
+    overflow: hidden;
 }
 
 #player .progress:hover {
     box-shadow: 0 0 .5rem var(--orange);
+}
+
+#player .progress > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--light);
+    opacity: .5;
+    height: 100%;
+    width: 0;
+    will-change: width;
+    pointer-events: none;
 }
 
 #player .duration {
@@ -447,25 +455,6 @@ figcaption {
 #about .social a:hover {
     color: var(--orange);
 }
-
-
-
-
-
-
-/* #qualifications figure {
-    transition: .8s;
-}
-
-#qualifications figure.active {
-    opacity: 1;
-    top: 0;
-}
-
-#qualifications figure:not(.active) {
-    opacity: 0;
-    top: 256px;
-} */
 
 
 
