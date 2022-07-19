@@ -15,7 +15,7 @@
     --white: white;
     --black: black;
     --dark: rgb(25,25,25);
-    --dark-translucent: rgb(25,25,25,.6);
+    --dark-translucent: rgba(40,40,40,0.6);
     --light: rgb(230,230,230);
     --light-translucent: rgba(230,230,230,.8);
     --orange: rgb(190,120,0);
@@ -56,6 +56,7 @@ header {
 
 main {
     overflow: hidden;
+    background-image: linear-gradient(to bottom right, rgb(30,30,30), var(--dark));
 }
 
 p {
@@ -78,16 +79,8 @@ figcaption {
     border: .25rem solid var(--dark-border-color);
 }
 
-
-
-
-#three {
-    position: fixed;
-    z-index: 1;
-}
-
-.dg.ac {
-    z-index: 1001;
+canvas {
+    display: none;
 }
 
 #root {
@@ -177,6 +170,10 @@ figcaption {
 }
 
 @media only screen and (max-width: 720px) {
+    .cv {
+        margin-left: 0 !important;
+    }
+
     .nav-toggler {
         display: block;
     }
@@ -223,7 +220,7 @@ figcaption {
     left: 50%;
     transform: translateX(-50%);
     width: 70%;
-    animation: pulse 4s linear 0s infinite forwards;
+    animation: pulse 2.3s linear 0s infinite forwards;
 }
 
 @keyframes pulse {
@@ -241,17 +238,46 @@ figcaption {
     background-repeat: no-repeat;
     background-size: 0 100%;
     background-color: black;
-    transition: 2s;
+    animation: load 2s linear 0s 1 forwards;
+}
+
+#loader.done > div > div {
+    animation: load-done .2s linear 0s 1 forwards;
+}
+
+@keyframes load {
+    0% { background-size: 0 100%; }
+    100% { background-size: 90% 100%; }
+}
+
+@keyframes load-done {
+    0% { background-size: 90% 100%; }
+    100% { background-size: 100% 100%; }
+}
+
+#hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100% !important;
+    z-index: 0;
+    overflow: hidden;
+}
+
+#hero-img img {
+    height: 100%;
+    width: 100%;
+    opacity: .4;
+    object-fit: cover;
 }
 
 
 
 #hero {
     height: calc(100vh - 76px);
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 1rem;
+    width: 100% !important;
+    display: flex !important;
 }
 
 #hero h1 {
@@ -434,7 +460,7 @@ figcaption {
 
 
 #about .social-wrapper {
-    background-color: rgb(25,25,25,.6);
+    background-color: rgba(70, 70, 70, 0.6);
     backdrop-filter: blur(.5rem);
     padding: 1rem .5rem;
     margin-bottom: 1rem;
@@ -1936,6 +1962,22 @@ form button {
 
 
 
+.light {
+    background-color: var(--light);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.space-blue {
+    background-color: #161d2e;
+}
+
+.dark {
+    background-color: var(--dark);
+}
+
 .bs-dark {
     background-color: rgb(33,37,41);
 }
@@ -2026,4 +2068,8 @@ form button {
 
 .phoenix-primary {
     background-color: #b10000;
+}
+
+.shadow {
+    box-shadow:.5rem .5rem .5rem black;
 }

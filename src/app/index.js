@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import { loadingManager } from './three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import world from '../assets/images/world.jpg';
+import threeJsPort from '../assets/images/threejs.png';
 import gazetteer from '../assets/images/gazetteer.png';
 import directory from '../assets/images/directory.png';
 import readit from '../assets/images/readit.png';
@@ -11,7 +12,6 @@ import faviconImg from '../assets/images/logo128.png';
 import solar from '../assets/audio/solar_penumbra.mp3'
 import VanillaTilt from 'vanilla-tilt';
 import '../assets/fontawesome-free-6.1.1-web/js/all.min';
-import './three';
 // import './index.css';
 // import './fonts.css';
 
@@ -34,8 +34,8 @@ const createImage = (src, alt, parentSelector) => {
 }
 
 // Loading Progress
-let loaded = false;
 let animationDone = false;
+let loaded = false;
 
 const beginningGSAP = () => {
     document.querySelector('#loader').classList.add('done');
@@ -53,26 +53,22 @@ setTimeout(() => {
         document.querySelector('#loader').classList.add('done');
         beginningGSAP();
     }
-
     animationDone = true;
-}, 4000);
+}, 2000);
 
-loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-    const progress = 100 * (itemsLoaded / itemsTotal);
-    document.querySelector('#loader>div>div').style.backgroundSize = `${progress}% 100%`;
-}
+// while(!loaded || !animationDone) {
+//     document.querySelector('#loader>div>div').style.backgroundSize += 1;
+// }
 
 document.addEventListener('DOMContentLoaded', e => {
 
-    loadingManager.onLoad = e => {
-        if (animationDone) {
-            beginningGSAP();
-        }
-
-        loaded = true;
+    if (animationDone) {
+        document.querySelector('#loader').classList.add('done');
+        beginningGSAP();
     }
+    loaded = true;
     
-    // Project Images
+    // Project Icons
     /************************************************/
     const head = document.querySelector('head');
     const favicon = document.createElement('link');
@@ -89,6 +85,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
     // Project Images
     /************************************************/
+    const threeJsPortImg = createImage(threeJsPort, 'ThreeJS Portfolio', '#threejsport .img');
     const directoryImg = createImage(directory, 'Company Directory', '#directory .img');
     const gazetteerImg = createImage(gazetteer, 'Gazetteer', '#gazetteer .img');
     const readitImg = createImage(readit, 'Readit4Reddit', '#readit .img');
@@ -395,8 +392,7 @@ document.addEventListener('DOMContentLoaded', e => {
     })
 
     // Scroll Animations
-    /************************************************/
-    
+    /************************************************/    
     gsap.to('#hero', {
         scrollTrigger: {
             trigger: '#about',
@@ -415,7 +411,7 @@ document.addEventListener('DOMContentLoaded', e => {
     gsap.to('#hero .actions', {
         scrollTrigger: {
             trigger: '#about',
-            start: 'top bottom',
+            start: 'top calc(99% - 1px)',
             end: 'top center',
             scrub: 2
         },
